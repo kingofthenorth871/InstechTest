@@ -30,13 +30,6 @@ namespace Claims.Tests
         private HttpClient _client;
         private JsonSerializerOptions _options;
 
-        public class CoverRequest
-        {
-            public DateTime StartDate { get; set; }
-            public DateTime EndDate { get; set; }
-            public CoverType Type { get; set; }
-        }
-
         public ClaimsCoversControllersTests()
             {
             // Arrange
@@ -109,7 +102,7 @@ namespace Claims.Tests
             // Assert
             response.EnsureSuccessStatusCode();
 
-            //Get all claims
+            //Get all covers
             var responseAllCovers = await _client.GetAsync("/Covers");
 
             // Assert
