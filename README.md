@@ -1,3 +1,194 @@
+ClaimsController API Documentation
+
+The ClaimsController is responsible for handling all HTTP requests related to claim operations in the application. It provides methods to retrieve, create, and delete claims as part of the insurance claims handling module.
+Dependencies
+
+    ILogger<ClaimsController>: Used for logging activities within the controller.
+    IClaimsService: Service layer interface for managing claim entities.
+    IAuditsService: Service layer interface for auditing claim activities.
+
+API Endpoints
+GET /Claims
+
+Retrieves a list of all claims in the system.
+Parameters
+
+None
+Returns
+
+    IEnumerable<Claim>: A list of Claim objects.
+    Example:
+    [
+    {
+        "Id": "abc123",
+        "CoverId": "cover456",
+        "Created": "2024-01-01T00:00:00Z",
+        "Name": "John Doe",
+        "Type": "Collision",
+        "DamageCost": 5000
+    }
+]
+
+
+POST /Claims
+
+Creates a new claim in the system.
+Parameters
+
+    Claim (body): A Claim object representing the new claim.
+
+Returns
+
+    ActionResult: HTTP Status Code indicating success or failure.
+    Example:
+
+{
+    "Id": "new123",
+    "CoverId": "cover789",
+    "Created": "2024-01-02T00:00:00Z",
+    "Name": "Jane Doe",
+    "Type": "Fire",
+    "DamageCost": 10000
+}
+
+Errors
+
+    500 Internal Server Error: If an exception occurs during processing.
+
+DELETE /Claims/{id}
+
+Deletes a claim identified by its unique ID.
+Parameters
+
+    id (URL parameter): The unique identifier of the claim to be deleted.
+
+Returns
+
+    void: Response is typically empty but indicates success with a 204 status code when successful.
+
+GET /Claims/{id}
+
+Retrieves a specific claim identified by its unique ID.
+Parameters
+
+    id (URL parameter): The unique identifier of the claim to be fetched.
+
+Returns
+
+    Claim: The requested claim object.
+    Example:
+
+{
+    "Id": "abc123",
+    "CoverId": "cover456",
+    "Created": "2024-01-01T00:00:00Z",
+    "Name": "John Doe",
+    "Type": "Collision",
+    "DamageCost": 5000
+}
+
+Error Handling
+
+All endpoints incorporate error handling that captures and logs backend exceptions. Errors are returned as HTTP status codes, with 500 typically indicating an internal server error.
+
+Logging
+All significant actions within the controller are logged for audit and debugging purposes, especially creation and deletion of claims.
+
+
+# CoversController Documentation
+
+The `CoversController` manages operations related to insurance covers within the system. It provides endpoints for computing premiums, retrieving covers, creating new covers, and deleting existing covers.
+
+## Endpoints
+
+### Compute Premium
+
+**HTTP Method:** POST
+
+**Route:** /covers/compute
+
+**Description:** Calculates the premium for a given cover based on the start date, end date, and cover type.
+
+**Request Body:**
+- `startDate` (DateTime): The start date of the cover.
+- `endDate` (DateTime): The end date of the cover.
+- `coverType` (CoverType): The type of cover.
+
+**Response:**
+- Status Code: 200 OK
+- Body: The calculated premium amount.
+
+### Get All Covers
+
+**HTTP Method:** GET
+
+**Route:** /covers
+
+**Description:** Retrieves all covers stored in the system.
+
+**Response:**
+- Status Code: 200 OK
+- Body: An array of Cover objects.
+
+### Get Cover by ID
+
+**HTTP Method:** GET
+
+**Route:** /covers/{id}
+
+**Description:** Retrieves a specific cover by its unique identifier.
+
+**Request Parameter:**
+- `id` (string): The unique identifier of the cover.
+
+**Response:**
+- Status Code: 200 OK
+- Body: The Cover object corresponding to the provided ID.
+
+### Create Cover
+
+**HTTP Method:** POST
+
+**Route:** /covers
+
+**Description:** Creates a new cover in the system.
+
+**Request Body:**
+- `cover` (Cover): The cover object to be created. Must include start date, end date, and cover type.
+
+**Response:**
+- Status Code: 200 OK
+- Body: The created Cover object, including its generated unique identifier and computed premium.
+
+### Delete Cover
+
+**HTTP Method:** DELETE
+
+**Route:** /covers/{id}
+
+**Description:** Deletes an existing cover from the system.
+
+**Request Parameter:**
+- `id` (string): The unique identifier of the cover to be deleted.
+
+**Response:**
+- Status Code: 200 OK (No content)
+
+## Dependencies
+
+- **ICoversService:** Interface for interacting with cover-related data and operations.
+- **IAuditsService:** Interface for auditing cover-related actions.
+- **ILogger:** Interface for logging messages within the controller.
+- **ComputePremiumCalculator:** Utility class for computing cover premiums.
+
+
+
+
+
+
+
+
+The assignment that has been solved:
 # Read this first!
 This repository is a template repository for our technical interview, so create your own project using this guide:
 
