@@ -108,7 +108,7 @@ namespace Claims.Tests
             var responseAllCovers = await _client.GetAsync("/Covers");
 
             // Assert
-            response.EnsureSuccessStatusCode();
+            responseAllCovers.EnsureSuccessStatusCode();
 
             // Assert
             var responseBody = await response.Content.ReadAsStringAsync();
