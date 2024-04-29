@@ -224,7 +224,7 @@ namespace Claims.Tests
         }
 
         [Fact]
-        public async Task Get_ComputeCovers()
+        public Task Get_ComputeCovers()
         {
             // Arrange
             DateTime dateTimeNow = DateTime.Now;
@@ -237,7 +237,7 @@ namespace Claims.Tests
             decimal expectedValue = 483931.250M;            
 
             Assert.Equal(expectedValue, returned);
-
+            return Task.CompletedTask;
         }
     }
 

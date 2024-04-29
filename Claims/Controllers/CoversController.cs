@@ -25,9 +25,9 @@ public class CoversController : ControllerBase
     }
 
     [HttpPost("compute")]
-    public async Task<ActionResult> ComputePremiumAsync(DateTime startDate, DateTime endDate, CoverType coverType)
+    public Task<ActionResult> ComputePremiumAsync(DateTime startDate, DateTime endDate, CoverType coverType)
     {
-        return Ok(ComputePremium(startDate, endDate, coverType));
+        return Task.FromResult<ActionResult>(Ok(ComputePremium(startDate, endDate, coverType)));
     }
 
     [HttpGet]
