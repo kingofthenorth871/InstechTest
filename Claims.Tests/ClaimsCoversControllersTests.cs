@@ -51,16 +51,18 @@ namespace Claims.Tests
 
         [Fact]
         public async Task Get_ClaimsAndCoversPostClaimAndCover()
-        {           
-            
+        {
+
+            //Todo cut down methods into smaller ones
+
             //Arrange           
 
             //creating a new cover
             var cover = new Cover
             {
-                StartDate = DateTime.UtcNow,
-                EndDate = DateTime.UtcNow.Date.AddYears(1),
-                Id = "123",
+                StartDate = DateTime.UtcNow.AddMonths(1),
+                EndDate = DateTime.UtcNow.Date.AddMonths(6),
+                Id = "124",
                 Premium = 10000,
                 Type = CoverType.BulkCarrier
             };
@@ -82,7 +84,7 @@ namespace Claims.Tests
                 // Set the properties as needed for your test
                 Id = "Example Claim",
                 CoverId = coverCreated.Id,
-                Created = DateTime.UtcNow,
+                Created = DateTime.UtcNow.AddMonths(2),
                 Name = "redddd",
                 Type = ClaimType.Fire,
                 DamageCost = 10000
@@ -119,13 +121,41 @@ namespace Claims.Tests
 
             // Assert that the response content type is JSON
             Assert.Equal("application/json; charset=utf-8", response.Content.Headers.ContentType.ToString());
-          
+
+
+            //setup deletion of the cover
+            var responseBodyCoverTest = await responseClaimPostingCover.Content.ReadAsStringAsync();
+            var coverCreatedtest = JsonSerializer.Deserialize<Cover>(responseBodyCoverTest, _options);
+
+            var jsonCoverTest = JsonSerializer.Serialize(coverCreatedtest.Id);
+            var coverClaim = new StringContent(jsonCoverTest, Encoding.UTF8, "application/json");
+
+
+            //Delete the cover
+            var responseDeletedCoverTest = await _client.DeleteAsync("/Covers/" + "{" + coverClaim + "}");
+            responseDeletedCoverTest.EnsureSuccessStatusCode();
+
+
+
+            //setup deletion of the claim
+            var responseBodyCoverTestclaim = await responseClaimPosting.Content.ReadAsStringAsync();
+            var coverCreatedtestclaim = JsonSerializer.Deserialize<Claim>(responseBodyCoverTestclaim, _options);
+
+            var jsonClaimTest = JsonSerializer.Serialize(coverCreatedtestclaim.Id);
+            var ClaimIdTest = new StringContent(jsonClaimTest, Encoding.UTF8, "application/json");
+
+
+            //Delete the claim
+            var responseDeletedClaimTest = await _client.DeleteAsync("/Covers/" + "{" + ClaimIdTest + "}");
+            responseDeletedClaimTest.EnsureSuccessStatusCode();
+
         }
 
         [Fact]
         public async Task Get_ClaimAndCoverByIdAndDeleteById()
         {
-                       
+            //Todo cut down methods into smaller ones
+
             //creating a new cover
             var cover = new Cover
             {
