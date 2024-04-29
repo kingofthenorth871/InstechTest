@@ -60,11 +60,10 @@ namespace Claims.Services
         {
             var response = await _coversService.GetCoversAsync();
             var cover = response.SingleOrDefault(cover => cover.Id == claim.CoverId);
-
-            //var cover = await _context.Covers.FirstOrDefaultAsync(c => c.Id == claim.CoverId);
+           
             if (cover == null)
-                throw new ArgumentException("Cover not found.");
-
+            { throw new ArgumentException("Cover not found."); }
+                
             return claim.Created.Date >= cover.StartDate.Date && claim.Created.Date <= cover.EndDate.Date;
         }
 
