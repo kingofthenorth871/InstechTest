@@ -181,7 +181,41 @@ The `CoversController` manages operations related to insurance covers within the
 - **ILogger:** Interface for logging messages within the controller.
 - **ComputePremiumCalculator:** Utility class for computing cover premiums.
 
+Database documentation:
 
+1. ClaimAudits Database Table:
+
+This table stores audit records for claims made in the system.
+
+    Columns:
+        Id (Primary Key, auto-generated integer): Unique identifier for each audit record.
+        ClaimId (String, required): Identifier for the associated claim.
+        Created (DateTime): Timestamp indicating when the audit record was created.
+        HttpRequestType (String, required): Type of HTTP request associated with the audit.
+
+2. CoverAudits Database Table:
+
+This table stores audit records for coverages applied in the system.
+
+    Columns:
+        Id (Primary Key, auto-generated integer): Unique identifier for each audit record.
+        CoverId (String, required): Identifier for the associated coverage.
+        Created (DateTime): Timestamp indicating when the audit record was created.
+        HttpRequestType (String, required): Type of HTTP request associated with the audit.
+
+Context and Relationships:
+
+    These audit tables serve as a log for tracking actions related to claims and coverages.
+    Each audit record captures details such as the ID of the claim or coverage, timestamp of the action, and the type of HTTP request (e.g., POST, DELETE).
+    There are no explicit relationships defined between these audit tables and other tables in the database. They function as standalone logs to maintain a record of relevant actions in the system.
+
+Additional Information:
+
+    The ClaimAudits and CoverAudits tables are designed to provide a history of interactions with claims and coverages, aiding in auditing, troubleshooting, and monitoring activities within the system.
+    The Created column records the date and time when the audit record was created, enabling chronological tracking of actions.
+    The HttpRequestType column specifies the type of HTTP request (e.g., POST, DELETE) associated with each audit entry, facilitating identification of the operation performed.
+
+This documentation outlines the purpose, structure, and context of the ClaimAudits and CoverAudits tables, providing insight into their role within the database schema.
 
 
 
